@@ -1,37 +1,54 @@
-import { supabase } from '../supabaseClient'
+import { supabase } from '../supabaseClient.js'
 
-export async function fetchNotes(userId) {
+export async function getNotes() {
   const { data, error } = await supabase
     .from('notes')
     .select('*')
-    .eq('user_id', userId)
     .order('updated_at', { ascending: false })
+
   if (error) throw error
   return data
 }
 
-export async function createNote(userId) {
+export async function getNote(id) {
   const { data, error } = await supabase
     .from('notes')
-    .insert({ user_id: userId, title: 'Untitled', content: '' })
+    .select('*')
+    .eq('id', id)
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+export async function createNote() {
+  const { data, error } = await supabase
+    .from('notes')
+    .insert({ title: 'Untitled', content: '' })
     .select()
     .single()
+
   if (error) throw error
   return data
 }
 
-export async function updateNote(id, patch) {
+export async function updateNote(id, updates) {
   const { data, error } = await supabase
     .from('notes')
-    .update(patch)
+    .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
     .single()
+
   if (error) throw error
   return data
 }
 
 export async function deleteNote(id) {
-  const { error } = await supabase.from('notes').delete().eq('id', id)
+  const { error } = await supabase
+    .from('notes')
+    .delete()
+    .eq('id', id)
+
   if (error) throw error
 }

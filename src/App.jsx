@@ -7,8 +7,14 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="center-page">
-        <div className="spinner" />
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        color: 'var(--text-secondary)'
+      }}>
+        Loading…
       </div>
     )
   }

@@ -3,20 +3,27 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { deleteNote, updateNote } from '../lib/notes.js'
 
-export default function NoteEditor({ note, onClose, onSaved, onDeleted }) {
+export default function NoteEditor({
+  note,
+  onClose,
+  onSaved,
+  onDeleted,
+}) {
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
   const [tab, setTab] = useState('write')
   const [saving, setSaving] = useState(false)
   const saveTimer = useRef(null)
 
-  // Autosave, debounced, whenever title or content changes.
   useEffect(() => {
     if (title === note.title && content === note.content) return
     setSaving(true)
     clearTimeout(saveTimer.current)
     saveTimer.current = setTimeout(async () => {
-      const updated = await updateNote(note.id, { title: title || 'Untitled', content })
+      const updated = await updateNote(note.id, {
+        title: title || 'Untitled',
+        content,
+      })
       onSaved(updated)
       setSaving(false)
     }, 600)
@@ -34,14 +41,20 @@ export default function NoteEditor({ note, onClose, onSaved, onDeleted }) {
     <div className="editor-overlay" onClick={onClose}>
       <div className="editor-panel" onClick={(e) => e.stopPropagation()}>
         <div className="editor-topbar">
-          <span style={{ fontSize: 12, color: 'var(--ink-soft)', fontFamily: 'var(--font-mono)' }}>
+          <span
+            style={{
+              fontSize: 12,
+              color: 'var(--ink-soft)',
+              fontFamily: 'var(--font-mono)',
+            }}
+          >
             {saving ? 'Saving…' : 'Saved'}
           </span>
           <div style={{ display: 'flex', gap: 8 }}>
-            <button className="btn btn-danger" onClick={handleDelete}>
+            <button className="btn btn-danger btn-sm" onClick={handleDelete}>
               Delete
             </button>
-            <button className="btn btn-primary" onClick={onClose}>
+            <button className="btn btn-primary btn-sm" onClick={onClose}>
               Done
             </button>
           </div>
@@ -80,9 +93,13 @@ export default function NoteEditor({ note, onClose, onSaved, onDeleted }) {
         ) : (
           <div className="markdown-preview">
             {content ? (
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {content}
+              </ReactMarkdown>
             ) : (
-              <p style={{ color: 'var(--ink-soft)' }}>Nothing to preview yet.</p>
+              <p style={{ color: 'var(--ink-soft)' }}>
+                Nothing to preview yet.
+              </p>
             )}
           </div>
         )}
