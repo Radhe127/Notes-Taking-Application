@@ -3,14 +3,7 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { deleteNote, updateNote } from '../lib/notes.js'
 
-export default function NoteEditor({
-  note,
-  onClose,
-  onSaved,
-  onDeleted,
-  onAction,
-  isTrash
-}) {
+export default function NoteEditor({ note, onClose, onSaved, onDeleted, onAction, isTrash }) {
   const [title, setTitle] = useState(note.title)
   const [content, setContent] = useState(note.content)
   const [tab, setTab] = useState('write')
@@ -27,8 +20,7 @@ export default function NoteEditor({
       setSaving(false)
     }, 600)
     return () => clearTimeout(saveTimer.current)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title, content])
+  }, [title, content, note.id, note.title, note.content, onSaved])
 
   async function handleDelete() {
     if (!confirm('Permanently delete this note? This cannot be undone.')) return
@@ -99,18 +91,10 @@ export default function NoteEditor({
         />
 
         <div className="editor-tabs">
-          <button
-            className={`editor-tab ${tab === 'write' ? 'active' : ''}`}
-            onClick={() => setTab('write')}
-            disabled={isTrash}
-          >
+          <button className={`editor-tab ${tab === 'write' ? 'active' : ''}`} onClick={() => setTab('write')} disabled={isTrash}>
             Write
           </button>
-          <button
-            className={`editor-tab ${tab === 'preview' ? 'active' : ''}`}
-            onClick={() => setTab('preview')}
-            disabled={isTrash}
-          >
+          <button className={`editor-tab ${tab === 'preview' ? 'active' : ''}`} onClick={() => setTab('preview')} disabled={isTrash}>
             Preview
           </button>
         </div>

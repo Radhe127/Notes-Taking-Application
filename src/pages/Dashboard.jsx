@@ -10,7 +10,7 @@ export default function Dashboard() {
   const { user, signOut } = useAuth()
   const [notes, setNotes] = useState([])
   const [selectedNote, setSelectedNote] = useState(null)
-  const [filter, setFilter] = useState('all') // 'all' | 'pinned' | 'trash'
+  const [filter, setFilter] = useState('all')
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem('note-theme') || 'light'
   })
@@ -50,7 +50,6 @@ export default function Dashboard() {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))
   }
 
-  // Filter notes
   const filteredNotes = notes.filter(note => {
     if (filter === 'all') return !note.trash && !note.pinned
     if (filter === 'pinned') return note.pinned && !note.trash
@@ -58,35 +57,28 @@ export default function Dashboard() {
     return true
   })
 
-  // Counts for sidebar
   const allCount = notes.filter(n => !n.trash && !n.pinned).length
   const pinnedCount = notes.filter(n => n.pinned && !n.trash).length
   const trashCount = notes.filter(n => n.trash).length
 
-  // Toggle pin
   const togglePin = async (note) => {
     const updated = await updateNote(note.id, { pinned: !note.pinned })
     setNotes(prev => prev.map(n => n.id === updated.id ? updated : n))
-    if (selectedNote?.id === note.id) {
-      setSelectedNote(updated)
-    }
+    if (selectedNote?.id === note.id) setSelectedNote(updated)
   }
 
-  // Move to trash
   const moveToTrash = async (note) => {
     const updated = await updateNote(note.id, { trash: true })
     setNotes(prev => prev.map(n => n.id === updated.id ? updated : n))
     setSelectedNote(null)
   }
 
-  // Restore from trash
   const restoreFromTrash = async (note) => {
     const updated = await updateNote(note.id, { trash: false })
     setNotes(prev => prev.map(n => n.id === updated.id ? updated : n))
     setSelectedNote(null)
   }
 
-  // Permanently delete
   const permanentlyDelete = async (note) => {
     if (!confirm('Permanently delete this note? This cannot be undone.')) return
     await deleteNote(note.id)
@@ -94,7 +86,6 @@ export default function Dashboard() {
     setSelectedNote(null)
   }
 
-  // Handle note actions from editor
   const handleNoteAction = (action, note) => {
     if (action === 'trash') moveToTrash(note)
     else if (action === 'restore') restoreFromTrash(note)
@@ -110,27 +101,17 @@ export default function Dashboard() {
         <div className="orb"></div>
       </div>
 
-      {/* Sidebar */}
       <aside className="sidebar">
         <Wordmark />
         <div className="sidebar-section">
           <span className="sidebar-label">Navigation</span>
-          <div
-            className={`nav-item ${filter === 'all' ? 'active' : ''}`}
-            onClick={() => setFilter('all')}
-          >
+          <div className={`nav-item ${filter === 'all' ? 'active' : ''}`} onClick={() => setFilter('all')}>
             📝 All Notes <span className="nav-count">{allCount}</span>
           </div>
-          <div
-            className={`nav-item ${filter === 'pinned' ? 'active' : ''}`}
-            onClick={() => setFilter('pinned')}
-          >
+          <div className={`nav-item ${filter === 'pinned' ? 'active' : ''}`} onClick={() => setFilter('pinned')}>
             📌 Pinned <span className="nav-count">{pinnedCount}</span>
           </div>
-          <div
-            className={`nav-item ${filter === 'trash' ? 'active' : ''}`}
-            onClick={() => setFilter('trash')}
-          >
+          <div className={`nav-item ${filter === 'trash' ? 'active' : ''}`} onClick={() => setFilter('trash')}>
             🗑️ Trash <span className="nav-count">{trashCount}</span>
           </div>
         </div>
@@ -145,7 +126,6 @@ export default function Dashboard() {
         </div>
       </aside>
 
-      {/* Main Content */}
       <main className="main-content">
         <Navbar theme={theme} onToggleTheme={toggleTheme} />
 

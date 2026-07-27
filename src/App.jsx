@@ -20,7 +20,6 @@ export default function App() {
     )
   }
 
-  // Show landing page if not logged in
   if (!user) {
     return <LandingPage />
   }

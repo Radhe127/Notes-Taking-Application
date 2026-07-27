@@ -5,12 +5,7 @@ export default function Navbar({ theme, onToggleTheme }) {
     <div className="topbar">
       <Wordmark />
       <div style={{ flex: 1 }} />
-      <button
-        className="btn-icon"
-        onClick={onToggleTheme}
-        title="Toggle theme"
-        aria-label="Toggle theme"
-      >
+      <button className="btn-icon" onClick={onToggleTheme} title="Toggle theme" aria-label="Toggle theme">
         {theme === 'dark' ? '☀️' : '🌙'}
       </button>
     </div>

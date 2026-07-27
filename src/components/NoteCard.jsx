@@ -1,15 +1,7 @@
 import { useState } from 'react'
 import { stripMarkdown, timeAgo } from '../lib/format.js'
 
-export default function NoteCard({
-  note,
-  onClick,
-  onPin,
-  onTrash,
-  onRestore,
-  onDelete,
-  isTrash
-}) {
+export default function NoteCard({ note, onClick, onPin, onTrash, onRestore, onDelete, isTrash }) {
   const [showActions, setShowActions] = useState(false)
   const excerpt = stripMarkdown(note.content).slice(0, 160)
 
@@ -27,36 +19,20 @@ export default function NoteCard({
         </h3>
         <div style={{ display: 'flex', gap: 4, opacity: showActions ? 1 : 0.5 }}>
           {!isTrash && (
-            <button
-              className="btn-icon-small"
-              onClick={(e) => { e.stopPropagation(); onPin(note) }}
-              title={note.pinned ? 'Unpin' : 'Pin'}
-            >
+            <button className="btn-icon-small" onClick={(e) => { e.stopPropagation(); onPin(note) }} title={note.pinned ? 'Unpin' : 'Pin'}>
               {note.pinned ? '📌' : '📍'}
             </button>
           )}
           {!isTrash ? (
-            <button
-              className="btn-icon-small"
-              onClick={(e) => { e.stopPropagation(); onTrash(note) }}
-              title="Move to trash"
-            >
+            <button className="btn-icon-small" onClick={(e) => { e.stopPropagation(); onTrash(note) }} title="Move to trash">
               🗑️
             </button>
           ) : (
             <>
-              <button
-                className="btn-icon-small"
-                onClick={(e) => { e.stopPropagation(); onRestore(note) }}
-                title="Restore"
-              >
+              <button className="btn-icon-small" onClick={(e) => { e.stopPropagation(); onRestore(note) }} title="Restore">
                 ↩️
               </button>
-              <button
-                className="btn-icon-small"
-                onClick={(e) => { e.stopPropagation(); onDelete(note) }}
-                title="Delete permanently"
-              >
+              <button className="btn-icon-small" onClick={(e) => { e.stopPropagation(); onDelete(note) }} title="Delete permanently">
                 ❌
               </button>
             </>

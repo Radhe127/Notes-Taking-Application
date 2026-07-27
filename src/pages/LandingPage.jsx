@@ -13,7 +13,6 @@ export default function LandingPage() {
             </div>
 
             <div className="landing-main">
-                {/* Navigation */}
                 <nav className="landing-nav">
                     <div className="landing-nav-inner">
                         <Wordmark />
@@ -23,7 +22,6 @@ export default function LandingPage() {
                     </div>
                 </nav>
 
-                {/* Hero */}
                 <section className="landing-hero">
                     <div className="landing-hero-badge">✨ Modern Note-Taking</div>
                     <h1 className="landing-title">
@@ -61,7 +59,6 @@ export default function LandingPage() {
                     </div>
                 </section>
 
-                {/* Features */}
                 <section id="features" className="landing-features">
                     <div className="landing-section-header">
                         <h2 className="landing-section-title">Powerful Features</h2>
@@ -111,7 +108,6 @@ export default function LandingPage() {
                     </div>
                 </section>
 
-                {/* Steps */}
                 <section className="landing-steps">
                     <div className="landing-section-header">
                         <h2 className="landing-section-title">Get Started in 3 Steps</h2>
@@ -158,7 +154,6 @@ export default function LandingPage() {
                     </div>
                 </section>
 
-                {/* Stats */}
                 <section className="landing-stats">
                     <div className="landing-stat">
                         <span className="landing-stat-number">50K+</span>
@@ -174,7 +169,6 @@ export default function LandingPage() {
                     </div>
                 </section>
 
-                {/* CTA */}
                 <section className="landing-cta">
                     <h2 className="landing-cta-title">Ready to Start Your Note-Taking Journey?</h2>
                     <p className="landing-cta-desc">
@@ -185,7 +179,6 @@ export default function LandingPage() {
                     </button>
                 </section>
 
-                {/* Footer */}
                 <footer className="landing-footer">
                     <div className="landing-footer-inner">
                         <Wordmark />
