@@ -29,18 +29,11 @@ export default function Login() {
       <div className="auth-card">
         <Wordmark size={28} />
         <p className="auth-sub">Write things down, simply.</p>
-
         {error && <div className="auth-error">{error}</div>}
-
-        <button
-          className="btn btn-ghost"
-          onClick={handleGithub}
-          disabled={loading}
-        >
+        <button className="btn btn-ghost" onClick={handleGithub} disabled={loading}>
           <GithubIcon />
           {loading ? 'Redirecting…' : 'Continue with GitHub'}
         </button>
-
         <p className="auth-hint">Your notes stay private to your account.</p>
       </div>
     </div>

@@ -14,13 +14,11 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null)
       setLoading(false)
     })
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null)
       setLoading(false)
@@ -32,9 +30,7 @@ export function AuthProvider({ children }) {
   const signInWithGithub = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'github',
-      options: {
-        redirectTo: window.location.origin,
-      },
+      options: { redirectTo: window.location.origin },
     })
     if (error) throw error
   }
@@ -45,6 +41,5 @@ export function AuthProvider({ children }) {
   }
 
   const value = { user, loading, signInWithGithub, signOut }
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

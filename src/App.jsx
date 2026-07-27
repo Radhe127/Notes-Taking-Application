@@ -1,4 +1,5 @@
 import { useAuth } from './contexts/AuthContext.jsx'
+import LandingPage from './pages/LandingPage.jsx'
 import Login from './pages/Login.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 
@@ -12,12 +13,17 @@ export default function App() {
         alignItems: 'center',
         justifyContent: 'center',
         minHeight: '100vh',
-        color: 'var(--text-secondary)'
+        color: 'var(--ink-soft)'
       }}>
         Loading…
       </div>
     )
   }
 
-  return user ? <Dashboard /> : <Login />
+  // Show landing page if not logged in
+  if (!user) {
+    return <LandingPage />
+  }
+
+  return <Dashboard />
 }
